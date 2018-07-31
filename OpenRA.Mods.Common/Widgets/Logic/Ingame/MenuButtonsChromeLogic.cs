@@ -27,6 +27,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		bool disableSystemButtons;
 		Widget currentWidget;
 
+		Widget statistics;
+
 		[ObjectCreator.UseCtor]
 		public MenuButtonsChromeLogic(Widget widget, ModData modData, World world, Dictionary<string, MiniYaml> logicArgs)
 		{
@@ -92,8 +94,14 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var stats = widget.GetOrNull<MenuButtonWidget>("OBSERVER_STATS_BUTTON");
 			if (stats != null)
 			{
-				stats.IsDisabled = () => disableSystemButtons || world.Map.Visibility.HasFlag(MapVisibility.MissionSelector);
-				stats.OnClick = () => OpenMenuPanel(stats, new WidgetArgs() { { "activePanel", ObserverStatsPanel.Basic } });
+				stats.IsDisabled = () => world.Map.Visibility.HasFlag(MapVisibility.MissionSelector);
+				stats.OnClick = () =>
+				{
+					if (statistics == null)
+						statistics = Game.LoadWidget(world, stats.MenuContainer, menuRoot, new WidgetArgs() { { "activePanel", ObserverStatsPanel.Basic } });
+					else
+						statistics.Visible = !statistics.Visible;
+				};
 			}
 
 			var keyListener = widget.GetOrNull<LogicKeyListenerWidget>("OBSERVER_KEY_LISTENER");
@@ -108,7 +116,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 							if (statsHotkeys[i].IsActivatedBy(e))
 							{
 								Game.Sound.PlayNotification(modData.DefaultRules, null, "Sounds", "ClickSound", null);
-								OpenMenuPanel(stats, new WidgetArgs() { { "activePanel", i } });
+								if (statistics != null)
+									statistics.Removed();
+								statistics = Game.LoadWidget(world, stats.MenuContainer, menuRoot, new WidgetArgs() { { "activePanel", i } });
 								return true;
 							}
 						}
