@@ -29,6 +29,9 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Group queues from separate buildings together into the same tab.")]
 		public readonly string Group = null;
 
+		// TODO: UI fluff; doesn't belong here
+		public readonly int SpectatorUIOrder = 9999;
+
 		[Desc("Only enable this queue for certain factions.")]
 		public readonly HashSet<string> Factions = new HashSet<string>();
 
