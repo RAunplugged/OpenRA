@@ -36,6 +36,7 @@ FACT:
 		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 0
 	ProductionQueue@NodBuilding:
 		Type: Building.Nod
 		Factions: nod
@@ -44,6 +45,7 @@ FACT:
 		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 0
 	ProductionQueue@GDIDefense:
 		Type: Defence.GDI
 		Factions: gdi
@@ -52,6 +54,7 @@ FACT:
 		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 1
 	ProductionQueue@NodDefense:
 		Type: Defence.Nod
 		Factions: nod
@@ -60,6 +63,7 @@ FACT:
 		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 1
 	BaseBuilding:
 	ProductionBar@BuildingGDI:
 		ProductionType: Building.GDI
@@ -302,6 +306,7 @@ PYLE:
 		Group: Infantry
 		LowPowerSlowdown: 3
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 3
 	ProductionBar:
 	Power:
 		Amount: -20
@@ -347,6 +352,7 @@ HAND:
 		Group: Infantry
 		LowPowerSlowdown: 3
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 3
 	ProductionBar:
 	Power:
 		Amount: -20
@@ -401,6 +407,7 @@ AFLD:
 		LowPowerSlowdown: 3
 		ReadyAudio:
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 2
 	ProductionBar:
 	Power:
 		Amount: -40
@@ -453,6 +460,7 @@ WEAP:
 		Group: Vehicle
 		LowPowerSlowdown: 3
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 2
 	ProductionBar:
 	Power:
 		Amount: -40
@@ -498,12 +506,14 @@ HPAD:
 		Group: Aircraft
 		LowPowerSlowdown: 3
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 4
 	ProductionQueue@Nod:
 		Type: Aircraft.Nod
 		Factions: nod
 		Group: Aircraft
 		LowPowerSlowdown: 3
 		LimitedAudio: BuildingInProgress
+		SpectatorUIOrder: 4
 	ProductionBar@GDI:
 		ProductionType: Aircraft.GDI
 	ProductionBar@Nod:

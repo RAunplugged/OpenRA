@@ -16,12 +16,14 @@ Player:
 		ReadyAudio: BuildingReady
 		BlockedAudio: NoRoom
 		SpeedUp: true
+		SpectatorUIOrder: 0
 	ClassicProductionQueue@Infantry:
 		Type: Infantry
 		BuildDurationModifier: 250
 		LowPowerSlowdown: 3
 		BlockedAudio: NoRoom
 		SpeedUp: true
+		SpectatorUIOrder: 1
 	ClassicProductionQueue@Vehicle:
 		Type: Vehicle
 		BuildDurationModifier: 250
@@ -29,6 +31,7 @@ Player:
 		QueuedAudio: Building
 		BlockedAudio: NoRoom
 		SpeedUp: true
+		SpectatorUIOrder: 2
 	ClassicProductionQueue@Armor:
 		Type: Armor
 		BuildDurationModifier: 250
@@ -36,6 +39,7 @@ Player:
 		QueuedAudio: Building
 		BlockedAudio: NoRoom
 		SpeedUp: true
+		SpectatorUIOrder: 3
 	ClassicProductionQueue@Starport:
 		Type: Starport
 		BuildDurationModifier: 212
@@ -43,6 +47,7 @@ Player:
 		BlockedAudio: NoRoom
 		QueuedAudio: OrderPlaced
 		ReadyAudio:
+		SpectatorUIOrder: 4
 	ClassicProductionQueue@Aircraft:
 		Type: Aircraft
 		BuildDurationModifier: 312
@@ -50,6 +55,7 @@ Player:
 		QueuedAudio: Building
 		BlockedAudio: NoRoom
 		SpeedUp: true
+		SpectatorUIOrder: 5
 	ClassicProductionQueue@Upgrade: # Upgrade is defined after others so it won't be automatically selected by ProductionQueueFromSelection.
 		Type: Upgrade
 		BuildDurationModifier: 250
@@ -57,6 +63,7 @@ Player:
 		QueuedAudio: Upgrading
 		ReadyAudio: NewOptions
 		BlockedAudio: NoRoom
+		SpectatorUIOrder: 6
 	PlaceBuilding:
 	SupportPowerManager:
 	ScriptTriggers:
