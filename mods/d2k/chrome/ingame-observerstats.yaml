@@ -22,13 +22,17 @@ Container@INGAME_OBSERVERSTATS_BG:
 					Font: Bold
 					Children:
 						LogicKeyListener@STATS_DROPDOWN_KEYHANDLER:
-					#Width: PARENT_RIGHT
-					#Height: 25
-					Children:
+				Background@GRAPH_BG:
+					Y: 35
+					ClickThrough: true
+					Background: dialogTransparentNoBorder
+					Width: PARENT_RIGHT
+					Height: 25
+					Children: 
 						Container@BASIC_STATS_HEADERS:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT
+							Width: 940
 							Height: PARENT_BOTTOM
 							Children:
 								Label@PLAYER_HEADER:
@@ -110,7 +114,7 @@ Container@INGAME_OBSERVERSTATS_BG:
 						Container@ECONOMY_STATS_HEADERS:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT
+							Width: 855
 							Height: PARENT_BOTTOM
 							Children:
 								Label@PLAYER_HEADER:
@@ -165,7 +169,7 @@ Container@INGAME_OBSERVERSTATS_BG:
 						Container@PRODUCTION_STATS_HEADERS:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT
+							Width: 807
 							Height: PARENT_BOTTOM
 							Children:
 								Label@PLAYER_HEADER:
@@ -176,14 +180,14 @@ Container@INGAME_OBSERVERSTATS_BG:
 									Font: Bold
 									Text: Player
 								Label@PRODUCTION_HEADER:
-									X: 150
+									X: 180
 									Y: 0
-									Width: 616
+									Width: 478
 									Height: 25
 									Font: Bold
 									Text: Production
 								Label@SUPPORT_POWERS_HEADER:
-									X: 774
+									X: 666
 									Y: 0
 									Width: 133
 									Height: 25
@@ -192,7 +196,7 @@ Container@INGAME_OBSERVERSTATS_BG:
 						Container@COMBAT_STATS_HEADERS:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT
+							Width: 790
 							Height: PARENT_BOTTOM
 							Children:
 								Label@PLAYER_HEADER:
@@ -268,21 +272,21 @@ Container@INGAME_OBSERVERSTATS_BG:
 					Width: PARENT_RIGHT
 					Height: PARENT_BOTTOM - 60
 					TopBottomSpacing: 5
-					ItemSpacing: 1
+					ItemSpacing: 2
 					Background: dialogTransparentNoBorder
 					ScrollbarWidth: 24
 					Children:
 						ScrollItem@BASIC_PLAYER_TEMPLATE:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT - 35
+							Width: 940
 							Height: 25
 							Children:
 								Image@FLAG:
 									X: 5
 									Y: 5
 									Width: 35
-									Height: PARENT_BOTTOM - 5
+									Height: PARENT_BOTTOM-5
 									ImageName: random
 									ImageCollection: flags
 								Label@PLAYER:
@@ -355,14 +359,14 @@ Container@INGAME_OBSERVERSTATS_BG:
 						ScrollItem@ECONOMY_PLAYER_TEMPLATE:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT - 35
+							Width: 855
 							Height: 25
 							Children:
 								Image@FLAG:
 									X: 5
 									Y: 5
 									Width: 35
-									Height: PARENT_BOTTOM - 5
+									Height: PARENT_BOTTOM-5
 									ImageName: random
 									ImageCollection: flags
 								Label@PLAYER:
@@ -418,14 +422,14 @@ Container@INGAME_OBSERVERSTATS_BG:
 						ScrollItem@PRODUCTION_PLAYER_TEMPLATE:
 							X: 0
 							Y: 0
-							Width: 915
-							Height: 52
+							Width: 807
+							Height: 54
 							Children:
 								Image@FLAG:
 									X: 5
 									Y: 20
 									Width: 35
-									Height: PARENT_BOTTOM - 5
+									Height: PARENT_BOTTOM-5
 									ImageName: random
 									ImageCollection: flags
 								Label@PLAYER:
@@ -436,27 +440,26 @@ Container@INGAME_OBSERVERSTATS_BG:
 									Font: Bold
 									Shadow: True
 								ObserverProductionIcons@PRODUCTION_ICONS:
-									X: 150
+									X: 180
 									Y: 0
-									Width: 616
+									Width: 478
 									Height: PARENT_BOTTOM
-									TooltipContainer: TOOLTIP_CONTAINER
 								ObserverSupportPowerIcons@SUPPORT_POWER_ICONS:
-									X: 774
+									X: 666
 									Y: 0
 									Width: 133
 									Height: PARENT_BOTTOM
 						ScrollItem@COMBAT_PLAYER_TEMPLATE:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT - 35
+							Width: 790
 							Height: 25
 							Children:
 								Image@FLAG:
 									X: 5
 									Y: 5
 									Width: 35
-									Height: PARENT_BOTTOM - 5
+									Height: PARENT_BOTTOM-5
 									ImageName: random
 									ImageCollection: flags
 								Label@PLAYER:
@@ -509,8 +512,8 @@ Container@INGAME_OBSERVERSTATS_BG:
 						Container@EARNED_THIS_MIN_GRAPH_TEMPLATE:
 							X: 0
 							Y: 0
-							Width: PARENT_RIGHT - 100
-							Height: PARENT_BOTTOM - 50
+							Width: PARENT_RIGHT-100
+							Height: PARENT_BOTTOM-50
 							Children:
 								LineGraph@EARNED_THIS_MIN_GRAPH:
 									X: 0
