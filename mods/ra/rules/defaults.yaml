@@ -525,6 +525,7 @@
 	Aircraft:
 		RepairBuildings: fix
 		AirborneCondition: airborne
+	FlyCircleOnIdle:
 	Targetable@GROUND:
 		TargetTypes: Ground, Repair, Vehicle
 		RequiresCondition: !airborne
