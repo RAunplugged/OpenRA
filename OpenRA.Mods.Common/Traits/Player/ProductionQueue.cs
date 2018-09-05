@@ -380,8 +380,7 @@ namespace OpenRA.Mods.Common.Traits
 							return;
 					}
 
-					var valued = unit.TraitInfoOrDefault<ValuedInfo>();
-					var cost = valued != null ? valued.Cost : 0;
+					var cost = GetProductionCost(unit);
 					var time = GetBuildTime(unit, bi);
 					var amountToBuild = Math.Min(fromLimit, order.ExtraData);
 					for (var n = 0; n < amountToBuild; n++)
@@ -420,15 +419,34 @@ namespace OpenRA.Mods.Common.Traits
 			if (developerMode.FastBuild)
 				return 0;
 
-			var time = bi.BuildDuration;
+			var techTree = self.Owner.PlayerActor.Trait<TechTree>();
+			var customTimes = unit.TraitInfos<CustomProductionTimeInfo>().Where(t =>
+				(!t.Queue.Any() || t.Queue.Contains(Info.Type)) &&
+				(!t.Prerequisites.Any() || techTree.HasPrerequisites(t.Prerequisites)));
+
+			var time = customTimes.Any() ? customTimes.First().BuildTime : bi.BuildDuration;
 			if (time == -1)
 			{
-				var valued = unit.TraitInfoOrDefault<ValuedInfo>();
-				time = valued != null ? valued.Cost : 0;
+				time = GetProductionCost(unit);
 			}
 
 			time = time * bi.BuildDurationModifier * Info.BuildDurationModifier / 10000;
 			return time;
+		}
+
+		public virtual int GetProductionCost(ActorInfo unit)
+		{
+			var valued = unit.TraitInfoOrDefault<ValuedInfo>();
+
+			if (valued == null)
+				return 0;
+
+			var techTree = self.Owner.PlayerActor.Trait<TechTree>();
+			var customCosts = unit.TraitInfos<CustomProductionCostInfo>().Where(t =>
+				(!t.Queue.Any() || t.Queue.Contains(Info.Type)) &&
+				(!t.Prerequisites.Any() || techTree.HasPrerequisites(t.Prerequisites)));
+
+			return customCosts.Any() ? customCosts.First().Cost : valued.Cost;
 		}
 
 		protected void CancelProduction(string itemName, uint numberToCancel)
