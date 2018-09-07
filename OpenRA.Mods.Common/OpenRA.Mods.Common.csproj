@@ -132,6 +132,7 @@
     <Compile Include="AI\States\GroundStates.cs" />
     <Compile Include="AI\States\NavyStates.cs" />
     <Compile Include="AI\States\ProtectionStates.cs" />
+    <Compile Include="Traits\Player\BotProvidesPrerequisite.cs" />
     <Compile Include="AI\States\StateBase.cs" />
     <Compile Include="AI\SupportPowerDecision.cs" />
     <Compile Include="AudioLoaders\AudLoader.cs" />
