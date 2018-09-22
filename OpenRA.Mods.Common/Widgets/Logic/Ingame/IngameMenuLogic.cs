@@ -21,7 +21,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 {
 	public class IngameMenuLogic : ChromeLogic
 	{
-		Widget menu;
+		readonly Widget menu;
 
 		[ObjectCreator.UseCtor]
 		public IngameMenuLogic(Widget widget, ModData modData, World world, Action onExit, WorldRenderer worldRenderer, IngameInfoPanel activePanel)
@@ -97,7 +97,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					var iop = world.WorldActor.TraitsImplementing<IObjectivesPanel>().FirstOrDefault();
 					var exitDelay = iop != null ? iop.ExitDelay : 0;
 
-					if (world.LobbyInfo.NonBotClients.Count() == 1)
+					if (!world.LobbyInfo.GlobalSettings.Dedicated && world.LobbyInfo.NonBotClients.Count() == 1)
 					{
 						restartAction = () =>
 						{
