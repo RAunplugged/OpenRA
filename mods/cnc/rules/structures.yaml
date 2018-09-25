@@ -33,37 +33,45 @@ FACT:
 		Factions: gdi
 		Group: Building
 		LowPowerSlowdown: 2
-		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 0
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionQueue@NodBuilding:
 		Type: Building.Nod
 		Factions: nod
 		Group: Building
 		LowPowerSlowdown: 2
-		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 0
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionQueue@GDIDefense:
 		Type: Defence.GDI
 		Factions: gdi
 		Group: Defence
 		LowPowerSlowdown: 3
-		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 1
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionQueue@NodDefense:
 		Type: Defence.Nod
 		Factions: nod
 		Group: Defence
 		LowPowerSlowdown: 3
-		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 1
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	BaseBuilding:
 	ProductionBar@BuildingGDI:
 		ProductionType: Building.GDI
@@ -305,8 +313,12 @@ PYLE:
 		Type: Infantry.GDI
 		Group: Infantry
 		LowPowerSlowdown: 3
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 3
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionBar:
 	Power:
 		Amount: -20
@@ -351,8 +363,12 @@ HAND:
 		Type: Infantry.Nod
 		Group: Infantry
 		LowPowerSlowdown: 3
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 3
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionBar:
 	Power:
 		Amount: -20
@@ -405,9 +421,11 @@ AFLD:
 		Type: Vehicle.Nod
 		Group: Vehicle
 		LowPowerSlowdown: 3
-		ReadyAudio:
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 2
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionBar:
 	Power:
 		Amount: -40
@@ -459,8 +477,12 @@ WEAP:
 		Type: Vehicle.GDI
 		Group: Vehicle
 		LowPowerSlowdown: 3
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 2
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionBar:
 	Power:
 		Amount: -40
@@ -498,6 +520,7 @@ HPAD:
 	RepairsUnits:
 		HpPerStep: 1000
 		PlayerExperience: 25
+		StartRepairingNotification: Repairing
 	WithRepairAnimation:
 	RallyPoint:
 	ProductionQueue@GDI:
@@ -505,15 +528,23 @@ HPAD:
 		Factions: gdi
 		Group: Aircraft
 		LowPowerSlowdown: 3
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 4
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionQueue@Nod:
 		Type: Aircraft.Nod
 		Factions: nod
 		Group: Aircraft
 		LowPowerSlowdown: 3
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
-		SpectatorUIOrder: 4
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ProductionBar@GDI:
 		ProductionType: Aircraft.GDI
 	ProductionBar@Nod:
@@ -621,6 +652,7 @@ FIX:
 		HpPerStep: 1000
 		Interval: 15
 		PlayerExperience: 25
+		StartRepairingNotification: Repairing
 	RallyPoint:
 	WithRepairAnimation:
 	Power:
