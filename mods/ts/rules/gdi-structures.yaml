@@ -103,6 +103,7 @@ GAPILE:
 		PauseOnCondition: empdisable
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 	WithIdleOverlay@LIGHTS:
 		Sequence: idle-lights
@@ -163,6 +164,7 @@ GAWEAP:
 		PauseOnCondition: empdisable
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 	WithIdleOverlay@ROOF:
 		Sequence: idle-roof
@@ -218,11 +220,13 @@ GAHPAD:
 		PauseOnCondition: empdisable
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	Reservable:
 	RepairsUnits:
 		HpPerStep: 1000
 		PauseOnCondition: empdisable
 		PlayerExperience: 15
+		StartRepairingNotification: Repairing
 	ProductionBar:
 	WithIdleOverlay@PLATFORM:
 		Sequence: idle-platform
@@ -274,6 +278,7 @@ GADEPT:
 		HpPerStep: 1000
 		PauseOnCondition: empdisable
 		PlayerExperience: 15
+		StartRepairingNotification: Repairing
 	RallyPoint:
 		Palette: mouse
 		IsPlayerPalette: false

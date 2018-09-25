@@ -17,6 +17,7 @@
 
 ^GainsExperience:
 	GainsExperience:
+		LevelUpNotification: LevelUp
 		Conditions:
 			500: rank
 			1000: rank
@@ -353,6 +354,7 @@
 	RepairableBuilding:
 		RepairStep: 700
 		PlayerExperience: 25
+		RepairingNotification: Repairing
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
