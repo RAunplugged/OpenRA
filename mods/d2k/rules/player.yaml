@@ -12,69 +12,88 @@ Player:
 		Type: Building
 		BuildDurationModifier: 250
 		LowPowerSlowdown: 3
-		QueuedAudio: Building
 		ReadyAudio: BuildingReady
 		BlockedAudio: NoRoom
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 		SpeedUp: true
-		SpectatorUIOrder: 0
 	ClassicProductionQueue@Infantry:
 		Type: Infantry
 		BuildDurationModifier: 250
 		LowPowerSlowdown: 3
+		ReadyAudio: UnitReady
 		BlockedAudio: NoRoom
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 		SpeedUp: true
-		SpectatorUIOrder: 1
 	ClassicProductionQueue@Vehicle:
 		Type: Vehicle
 		BuildDurationModifier: 250
 		LowPowerSlowdown: 3
-		QueuedAudio: Building
+		ReadyAudio: UnitReady
 		BlockedAudio: NoRoom
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 		SpeedUp: true
-		SpectatorUIOrder: 2
 	ClassicProductionQueue@Armor:
 		Type: Armor
 		BuildDurationModifier: 250
 		LowPowerSlowdown: 3
-		QueuedAudio: Building
+		ReadyAudio: UnitReady
 		BlockedAudio: NoRoom
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 		SpeedUp: true
-		SpectatorUIOrder: 3
 	ClassicProductionQueue@Starport:
 		Type: Starport
 		BuildDurationModifier: 212
 		LowPowerSlowdown: 1
 		BlockedAudio: NoRoom
 		QueuedAudio: OrderPlaced
-		ReadyAudio:
-		SpectatorUIOrder: 4
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	ClassicProductionQueue@Aircraft:
 		Type: Aircraft
 		BuildDurationModifier: 312
 		LowPowerSlowdown: 3
-		QueuedAudio: Building
+		ReadyAudio: UnitReady
 		BlockedAudio: NoRoom
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 		SpeedUp: true
-		SpectatorUIOrder: 5
 	ClassicProductionQueue@Upgrade: # Upgrade is defined after others so it won't be automatically selected by ProductionQueueFromSelection.
 		Type: Upgrade
 		BuildDurationModifier: 250
 		LowPowerSlowdown: 1
-		QueuedAudio: Upgrading
 		ReadyAudio: NewOptions
 		BlockedAudio: NoRoom
-		SpectatorUIOrder: 6
+		QueuedAudio: Upgrading
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
 	PlaceBuilding:
+		NewOptionsNotification: NewOptions
+		CannotPlaceNotification: BuildingCannotPlaceAudio
 	SupportPowerManager:
 	ScriptTriggers:
 	MissionObjectives:
+		WinNotification: Win
+		LoseNotification: Lose
+		LeaveNotification: Leave
 	ConquestVictoryConditions:
 	PowerManager:
 		AdviceInterval: 650
+		SpeechNotification: LowPower
 	AllyRepair:
 	PlayerResources:
 		SelectableCash: 2500, 5000, 7000, 10000, 20000
 		InsufficientFundsNotification: InsufficientFunds
+		CashTickUpNotification: CashTickUp
+		CashTickDownNotification: CashTickDown
 	DeveloperMode:
 		CheckboxDisplayOrder: 7
 	BaseAttackNotifier:
