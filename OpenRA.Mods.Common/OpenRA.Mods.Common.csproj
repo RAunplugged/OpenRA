@@ -149,6 +149,7 @@
     <Compile Include="Effects\SpriteEffect.cs" />
     <Compile Include="Graphics\RailgunRenderable.cs" />
     <Compile Include="Effects\LaunchEffect.cs" />
+    <Compile Include="Lint\CheckNotifications.cs" />
     <Compile Include="Projectiles\AreaBeam.cs" />
     <Compile Include="Projectiles\Bullet.cs" />
     <Compile Include="Projectiles\InstantHit.cs" />
@@ -478,8 +479,7 @@
     <Compile Include="Traits\Render\WithNukeLaunchOverlay.cs" />
     <Compile Include="Traits\Render\WithParachute.cs" />
     <Compile Include="Traits\Render\WithRangeCircle.cs" />
-    <Compile Include="Traits\Render\WithRearmAnimation.cs" />
-    <Compile Include="Traits\Render\WithRepairAnimation.cs" />
+    <Compile Include="Traits\Render\WithResupplyAnimation.cs" />
     <Compile Include="Traits\Render\WithRepairOverlay.cs" />
     <Compile Include="Traits\Render\WithResources.cs" />
     <Compile Include="Traits\Render\WithShadow.cs" />
@@ -870,7 +870,6 @@
     <Compile Include="UpdateRules\UpdateRule.cs" />
     <Compile Include="UpdateRules\UpdatePath.cs" />
     <Compile Include="UpdateRules\UpdateUtils.cs" />
-    <Compile Include="UpdateRules\Rules\RenameEditorTilesetFilter.cs" />
     <Compile Include="UpdateRules\Rules\20171014\LegacyBetaWarning.cs" />
     <Compile Include="UpdateRules\Rules\20171014\RemoveMobileOnRails.cs" />
     <Compile Include="UpdateRules\Rules\20171014\AircraftCanHoverGeneralization.cs" />
@@ -914,7 +913,9 @@
     <Compile Include="UpdateRules\Rules\20180307\AddShakeToBridge.cs" />
     <Compile Include="UpdateRules\Rules\20180307\IgnoreAbstractActors.cs" />
     <Compile Include="UpdateRules\Rules\20180307\RemoveCanUndeployFromGrantConditionOnDeploy.cs" />
-    <Compile Include="UpdateRules\Rules\DefineNotificationDefaults.cs" />
+    <Compile Include="UpdateRules\Rules\20180923\DefineNotificationDefaults.cs" />
+    <Compile Include="UpdateRules\Rules\20180923\RenameEditorTilesetFilter.cs" />
+    <Compile Include="UpdateRules\Rules\20180923\MergeRearmAndRepairAnimation.cs" />
     <Compile Include="Traits\Player\PlayerResources.cs" />
     <Compile Include="UtilityCommands\DumpSequenceSheetsCommand.cs" />
     <Compile Include="Traits\Render\WithBuildingRepairDecoration.cs" />
