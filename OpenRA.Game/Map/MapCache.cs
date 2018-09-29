@@ -91,6 +91,8 @@ namespace OpenRA
 				mapLocations.Add(package, classification);
 			}
 
+			previews.Clear();
+
 			var mapGrid = modData.Manifest.Get<MapGrid>();
 			foreach (var kv in MapLocations)
 			{
