@@ -114,7 +114,7 @@ namespace OpenRA.Mods.Common.Widgets
 					icons[i].Actor = null;
 
 			int queueColumn = -1;
-			var currentItemsByItem = queues.Select(a => a.Trait.CurrentItem()).Where(pi => pi != null).GroupBy(pr => pr.Item)
+			var currentItemsByItem = queues.Select(a => a.Trait.AllQueued().FirstOrDefault()).Where(pi => pi != null).GroupBy(pr => pr.Item)
 				.OrderBy(g => g.First().Queue.Info.SpectatorUIOrder)
 				.ThenBy(g => g.First().Queue.Info.Type)
 				.ThenBy(g => world.Map.Rules.Actors[g.First().Item].TraitInfo<BuildableInfo>().BuildPaletteOrder).ToList();
@@ -177,7 +177,7 @@ namespace OpenRA.Mods.Common.Widgets
 			if (item.Done)
 				return "READY";
 
-			return WidgetUtils.FormatTime(item.RemainingTimeActual, timestep);
+			return WidgetUtils.FormatTime(item.Queue.RemainingTimeActual(item), timestep);
 		}
 
 		public override Widget Clone()
