@@ -651,6 +651,39 @@ namespace OpenRA
 			var resources = Rules.Actors["world"].TraitInfos<ResourceTypeInfo>()
 				.ToDictionary(r => r.ResourceType, r => r.TerrainType);
 
+			var actorTypes = Rules.Actors.Values.Where(a => a.HasTraitInfo<RenderOnMapPreviewInfo>());
+			var actors = ActorDefinitions.Where(a => actorTypes.Where(ai => ai.Name == a.Value.Value).Any());
+			List<Pair<MPos, Color>> actorPositions = new List<Pair<MPos, Color>>();
+			foreach (var actor in actors)
+			{
+				var s = new ActorReference(actor.Value.Value, actor.Value.ToDictionary());
+
+				var ai = Rules.Actors[actor.Value.Value];
+				var romp = ai.TraitInfo<RenderOnMapPreviewInfo>();
+				var ios = ai.TraitInfo<IOccupySpaceInfo>();
+				var cells = ios.OccupiedCells(ai, s.InitDict.Get<LocationInit>().Value(null));
+
+				Color color;
+				if (!string.IsNullOrEmpty(romp.Terrain))
+				{
+					color = tileset[tileset.GetTerrainIndex(romp.Terrain)].Color;
+				}
+				else if (romp.Color != new HSLColor())
+				{
+					color = romp.Color.RGB;
+				}
+				else
+				{
+					var owner = PlayerDefinitions.Where(p => s.InitDict.Get<OwnerInit>().PlayerName == p.Value.Nodes.First(k => k.Key == "Name").Value.Value).First();
+					var colorValue = owner.Value.Nodes.Where(n => n.Key == "Color");
+					var ownerColor = colorValue.Any() ? colorValue.First().Value.Value : "FFFFFF";
+					HSLColor.TryParseRGB(ownerColor, out color);
+				}
+
+				foreach (var cell in cells)
+					actorPositions.Add(new Pair<MPos, Color>(cell.Key.ToMPos(this), color));
+			}
+
 			using (var stream = new MemoryStream())
 			{
 				var isRectangularIsometric = Grid.Type == MapGridType.RectangularIsometric;
@@ -682,7 +715,12 @@ namespace OpenRA
 							{
 								var uv = new MPos(x + Bounds.Left, y + Bounds.Top);
 								var resourceType = Resources[uv].Type;
-								if (resourceType != 0)
+								var actorsThere = actorPositions.Where(ap => ap.First == uv);
+								if (actorsThere.Any())
+								{
+									leftColor = rightColor = actorsThere.First().Second;
+								}
+								else if (resourceType != 0)
 								{
 									// Cell contains resources
 									string res;

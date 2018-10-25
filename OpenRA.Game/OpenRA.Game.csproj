@@ -178,6 +178,7 @@
     <Compile Include="Support\Program.cs" />
     <Compile Include="Sync.cs" />
     <Compile Include="TraitDictionary.cs" />
+    <Compile Include="Traits\RenderOnMapPreview.cs" />
     <Compile Include="Traits\LintAttributes.cs" />
     <Compile Include="Traits\Player\Shroud.cs" />
     <Compile Include="Traits\Selectable.cs" />
