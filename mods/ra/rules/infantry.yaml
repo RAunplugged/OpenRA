@@ -240,9 +240,23 @@ E6:
 		PipType: Yellow
 	EngineerRepair:
 	RepairsBridges:
-	ExternalCaptures:
+	CaptureManager:
+	GrantConditionOnPrerequisite@GLOBALREUSABLEENGINEER:
+		Condition: global-reusable-engineers
+		Prerequisites: global-reusable-engineers
+	Captures:
+		RequiresCondition: !global-reusable-engineers
 		CaptureTypes: building
 		PlayerExperience: 25
+		CaptureDelay: 200
+	Captures@REUSABLE:
+		RequiresCondition: global-reusable-engineers
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 375
+		ConsumedByCapture: False
+		EnterCursor: ability
+		EnterBlockedCursor: move-blocked
 	Voiced:
 		VoiceSet: EngineerVoice
 	Selectable:
@@ -430,6 +444,7 @@ MECH:
 		ForceTargetStances: None
 	AttackFrontal:
 		Voice: Move
+	CaptureManager:
 	Captures:
 		CaptureTypes: husk
 		PlayerExperience: 25
@@ -536,6 +551,7 @@ HIJACKER:
 		Range: 5c0
 	Passenger:
 		PipType: Blue
+	CaptureManager:
 	Captures:
 		CaptureTypes: vehicle
 		PlayerExperience: 50

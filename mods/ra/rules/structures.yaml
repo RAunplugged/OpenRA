@@ -60,7 +60,10 @@ MSLO:
 		Amount: -150
 	MustBeDestroyed:
 		RequiredForShortGame: false
+	WithMakeAnimation:
+		Condition: build-incomplete
 	WithNukeLaunchAnimation:
+		RequiresCondition: !build-incomplete
 
 GAP:
 	Inherits: ^ScienceBuilding
@@ -144,41 +147,49 @@ SPEN:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Exit@1:
+		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
 		Facing: 96
 		ExitCell: -1,2
 		ProductionTypes: Submarine
 	Exit@2:
+		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
 		Facing: 160
 		ExitCell: 3,2
 		ProductionTypes: Submarine
 	Exit@3:
+		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
 		Facing: 32
 		ExitCell: 0,0
 		ProductionTypes: Submarine
 	Exit@4:
+		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
 		Facing: 224
 		ExitCell: 2,0
 		ProductionTypes: Submarine
 	Exit@b1:
+		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
 		Facing: 160
 		ExitCell: 0,2
 		ProductionTypes: Ship
 	Exit@b2:
+		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
 		Facing: 224
 		ExitCell: 2,2
 		ProductionTypes: Ship
 	Exit@b3:
+		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
 		Facing: 96
 		ExitCell: 0,0
 		ProductionTypes: Ship
 	Exit@b4:
+		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
 		Facing: 32
 		ExitCell: 2,0
@@ -281,21 +292,25 @@ SYRD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Exit@1:
+		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
 		Facing: 160
 		ExitCell: 0,2
 		ProductionTypes: Ship, Boat
 	Exit@2:
+		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
 		Facing: 224
 		ExitCell: 2,2
 		ProductionTypes: Ship, Boat
 	Exit@3:
+		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
 		Facing: 96
 		ExitCell: 0,0
 		ProductionTypes: Ship, Boat
 	Exit@4:
+		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
 		Facing: 32
 		ExitCell: 2,0
@@ -967,10 +982,14 @@ WEAP:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
+	WithMakeAnimation:
+		Condition: build-incomplete
 	WithProductionDoorOverlay:
+		RequiresCondition: !build-incomplete
 		Sequence: build-top
 	RallyPoint:
 	Exit@1:
+		RequiresCondition: !being-captured
 		SpawnOffset: 213,-128,0
 		ExitCell: 1,2
 	Production:
@@ -1098,9 +1117,8 @@ FACT:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	WithBuildingBib:
 	Production:
-		Produces: Building,Defense
+		Produces: Building, Defense
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -1109,13 +1127,13 @@ FACT:
 		ActorTypes: e1,e1,e1,tecn,tecn,e6
 	BaseBuilding:
 	Transforms:
-		PauseOnCondition: chrono-vortex
+		PauseOnCondition: chrono-vortex || being-captured
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 96
 		RequiresCondition: factundeploy
 	Sellable:
-		RequiresCondition: !chrono-vortex
+		RequiresCondition: !chrono-vortex && !being-captured
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -1125,8 +1143,13 @@ FACT:
 		ProductionType: Defense
 		Color: 8A8A8A
 	BaseProvider:
+		PauseOnCondition: being-captured
 		Range: 16c0
+	WithBuildingBib:
+	WithMakeAnimation:
+		Condition: build-incomplete
 	WithBuildingPlacedAnimation:
+		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
 		Amount: 0
 	WithDeathAnimation:
@@ -1174,7 +1197,6 @@ PROC:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	WithBuildingBib:
 	Refinery:
 		DockAngle: 64
 		DockOffset: 1,2
@@ -1192,7 +1214,11 @@ PROC:
 		Percentage: 50
 		Types: SpyInfiltrate
 		Notification: CreditsStolen
+	WithBuildingBib:
+	WithMakeAnimation:
+		Condition: build-incomplete
 	WithIdleOverlay@TOP:
+		RequiresCondition: !build-incomplete
 		Sequence: idle-top
 	Power:
 		Amount: -30
@@ -1238,7 +1264,10 @@ SILO:
 		Range: 4c0
 	WithBuildingBib:
 		HasMinibib: Yes
+	WithMakeAnimation:
+		Condition: build-incomplete
 	WithSiloAnimation:
+		RequiresCondition: !build-incomplete
 	StoresResources:
 		PipCount: 5
 		Capacity: 3000
@@ -1280,7 +1309,12 @@ HPAD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
+	WithMakeAnimation:
+		Condition: build-incomplete
+	WithResupplyAnimation:
+		RequiresCondition: !build-incomplete
 	Exit@1:
+		RequiresCondition: !being-captured
 		SpawnOffset: 0,-256,0
 		ExitCell: 0,0
 		MoveIntoWorld: false
@@ -1338,7 +1372,6 @@ HPAD:
 		ReferencePoint: Top
 		ZOffset: 256
 		RequiresCondition: primary
-	WithResupplyAnimation:
 
 AFLD:
 	Inherits: ^Building
@@ -1371,6 +1404,7 @@ AFLD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Exit@1:
+		RequiresCondition: !being-captured
 		ExitCell: 1,1
 		Facing: 192
 		MoveIntoWorld: false
@@ -1478,7 +1512,10 @@ AFLD:
 		ReferencePoint: Top
 		ZOffset: 256
 		RequiresCondition: primary
+	WithMakeAnimation:
+		Condition: build-incomplete
 	WithResupplyAnimation:
+		RequiresCondition: !build-incomplete
 
 AFLD.Ukraine:
 	Inherits: AFLD
@@ -1638,10 +1675,12 @@ BARR:
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
+		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
 		ExitCell: 1,2
 		ProductionTypes: Soldier, Infantry
 	Exit@2:
+		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
 		ProductionTypes: Soldier, Infantry
@@ -1718,10 +1757,12 @@ KENN:
 	RallyPoint:
 		Offset: 0,2
 	Exit@1:
+		RequiresCondition: !being-captured
 		SpawnOffset: -280,400,0
 		ExitCell: 0,1
 		ProductionTypes: Dog, Infantry
 	Exit@2:
+		RequiresCondition: !being-captured
 		SpawnOffset: -280,400,0
 		ExitCell: -1,0
 		ProductionTypes: Dog, Infantry
@@ -1776,10 +1817,12 @@ TENT:
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
+		RequiresCondition: !being-captured
 		SpawnOffset: -42,810,0
 		ExitCell: 1,2
 		ProductionTypes: Soldier, Infantry
 	Exit@2:
+		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
 		ProductionTypes: Soldier, Infantry
@@ -1864,8 +1907,6 @@ FIX:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	WithBuildingBib:
-		HasMinibib: Yes
 	Reservable:
 	RallyPoint:
 	RepairsUnits:
@@ -1874,7 +1915,12 @@ FIX:
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
+	WithBuildingBib:
+		HasMinibib: Yes
+	WithMakeAnimation:
+		Condition: build-incomplete
 	WithResupplyAnimation:
+		RequiresCondition: !build-incomplete
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:

@@ -96,11 +96,11 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("How fast this actor ascends or descends when using vertical take off/landing.")]
 		public readonly WDist AltitudeVelocity = new WDist(43);
 
-		[Desc("Sound to play when the actor is taking off.")]
-		public readonly string TakeoffSound = null;
+		[Desc("Sounds to play when the actor is taking off.")]
+		public readonly string[] TakeoffSounds = { };
 
-		[Desc("Sound to play when the actor is landing.")]
-		public readonly string LandingSound = null;
+		[Desc("Sounds to play when the actor is landing.")]
+		public readonly string[] LandingSounds = { };
 
 		[Desc("The distance of the resupply base that the aircraft will wait for its turn.")]
 		public readonly WDist WaitDistanceFromResupplyBase = new WDist(3072);
@@ -624,6 +624,12 @@ namespace OpenRA.Mods.Common.Traits
 				new HeliFly(self, Target.FromPos(toPos)));
 		}
 
+		public int EstimatedMoveDuration(Actor self, WPos fromPos, WPos toPos)
+		{
+			var speed = MovementSpeed;
+			return speed > 0 ? (toPos - fromPos).Length / speed : 0;
+		}
+
 		public CPos NearestMoveableCell(CPos cell) { return cell; }
 
 		public bool IsMoving { get { return isMoving; } set { } }
@@ -744,8 +750,8 @@ namespace OpenRA.Mods.Common.Traits
 
 						Action enter = () =>
 						{
-							var exit = targetActor.Info.FirstExitOrDefault(null);
-							var offset = (exit != null) ? exit.SpawnOffset : WVec.Zero;
+							var exit = targetActor.FirstExitOrDefault(null);
+							var offset = exit != null ? exit.Info.SpawnOffset : WVec.Zero;
 
 							self.QueueActivity(new HeliFly(self, Target.FromPos(targetActor.CenterPosition + offset)));
 							self.QueueActivity(new Turn(self, Info.InitialFacing));
