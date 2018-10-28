@@ -27,22 +27,6 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly bool CancelActivity = false;
 
 		public override object Create(ActorInitializer init) { return new Capturable(init.Self, this); }
-
-		public bool CanBeTargetedBy(Actor captor, Player owner)
-		{
-			var c = captor.Info.TraitInfoOrDefault<CapturesInfo>();
-			if (c == null)
-				return false;
-
-			var stance = owner.Stances[captor.Owner];
-			if (!ValidStances.HasStance(stance))
-				return false;
-
-			if (!c.CaptureTypes.Overlaps(Types))
-				return false;
-
-			return true;
-		}
 	}
 
 	public class Capturable : ConditionalTrait<CapturableInfo>, INotifyCapture
@@ -55,7 +39,7 @@ namespace OpenRA.Mods.Common.Traits
 			captureManager = self.Trait<CaptureManager>();
 		}
 
-		public void OnCapture(Actor self, Actor captor, Player oldOwner, Player newOwner)
+		void INotifyCapture.OnCapture(Actor self, Actor captor, Player oldOwner, Player newOwner, BitSet<CaptureType> captureTypes)
 		{
 			if (Info.CancelActivity)
 			{
@@ -63,14 +47,6 @@ namespace OpenRA.Mods.Common.Traits
 				foreach (var t in self.TraitsImplementing<IResolveOrder>())
 					t.ResolveOrder(self, stop);
 			}
-		}
-
-		public bool CanBeTargetedBy(Actor captor, Player owner)
-		{
-			if (IsTraitDisabled)
-				return false;
-
-			return Info.CanBeTargetedBy(captor, owner);
 		}
 
 		protected override void TraitEnabled(Actor self) { captureManager.RefreshCapturable(self); }
