@@ -20,10 +20,11 @@ FACT:
 	Production:
 		Produces: Building.GDI, Building.Nod, Defence.GDI, Defence.Nod
 	Transforms:
+		RequiresCondition: factundeploy && !build-incomplete
+		PauseOnCondition: being-demolished
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 108
-		RequiresCondition: factundeploy
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -84,8 +85,6 @@ FACT:
 		Cooldown: 75
 		Range: 14c0
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete
 	Power:
@@ -229,8 +228,6 @@ PROC:
 		SpawnOffset: 1,2
 		Facing: 64
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithResources:
 		RequiresCondition: !build-incomplete
 	Power:
@@ -260,8 +257,6 @@ SILO:
 		Range: 4c0
 	WithBuildingBib:
 		HasMinibib: Yes
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithSiloAnimation:
 		RequiresCondition: !build-incomplete
 	StoresResources:
@@ -327,6 +322,7 @@ PYLE:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 	ProductionBar:
+		ProductionType: Infantry.GDI
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -377,6 +373,7 @@ HAND:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 	ProductionBar:
+		ProductionType: Infantry.Nod
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -421,8 +418,6 @@ AFLD:
 	ProductionAirdrop:
 		Produces: Vehicle.Nod
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithIdleOverlay@DISH:
 		RequiresCondition: !build-incomplete
 		Sequence: idle-dish
@@ -438,6 +433,7 @@ AFLD:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 	ProductionBar:
+		ProductionType: Vehicle.Nod
 	Power:
 		Amount: -40
 	ProvidesPrerequisite@buildingname:
@@ -474,8 +470,6 @@ WEAP:
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithProductionDoorOverlay:
 		RequiresCondition: !build-incomplete
 		Sequence: build-top
@@ -498,6 +492,7 @@ WEAP:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 	ProductionBar:
+		ProductionType: Vehicle.GDI
 	Power:
 		Amount: -40
 	ProvidesPrerequisite@buildingname:
@@ -535,8 +530,6 @@ HPAD:
 		HpPerStep: 1000
 		PlayerExperience: 25
 		StartRepairingNotification: Repairing
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	RallyPoint:
@@ -664,8 +657,6 @@ FIX:
 		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: Yes
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	Reservable:
@@ -798,8 +789,6 @@ TMPL:
 		ClockSequence: clock
 		CircleSequence: circles
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithNukeLaunchAnimation:
 		RequiresCondition: !build-incomplete
 	WithNukeLaunchOverlay:
@@ -845,6 +834,7 @@ GUN:
 		LocalOffset: 512,0,112
 		MuzzleSequence: muzzle
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 	WithMuzzleOverlay:
 	-WithDeathAnimation:
 	DetectCloaked:
@@ -895,6 +885,7 @@ SAM:
 		Weapon: Dragon
 		MuzzleSequence: muzzle
 	AttackPopupTurreted:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: lowpower
 	WithMuzzleOverlay:
 	-RenderDetectionCircle:
@@ -930,14 +921,13 @@ OBLI:
 		Range: 8c0
 	WithBuildingBib:
 		HasMinibib: Yes
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithChargeAnimation:
 		RequiresCondition: !build-incomplete
 	Armament:
 		Weapon: Laser
 		LocalOffset: 0,-85,1280
 	AttackCharges:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: lowpower
 		ChargeLevel: 50
 		ChargingCondition: charging
@@ -980,6 +970,7 @@ GTWR:
 		LocalOffset: 256,0,256
 		MuzzleSequence: muzzle
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 	BodyOrientation:
 		QuantizedFacings: 8
 	DetectCloaked:
@@ -1029,6 +1020,7 @@ ATWR:
 		LocalOffset: 256,128,0, 256,-128,0
 		LocalYaw: -100,100
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: lowpower
 	BodyOrientation:
 		QuantizedFacings: 8

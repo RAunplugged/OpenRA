@@ -409,7 +409,7 @@ namespace OpenRA.Mods.Common.Traits
 								else if (!hasPlayedSound && time > 0)
 									hasPlayedSound = Game.Sound.PlayNotification(rules, self.Owner, "Speech", Info.BlockedAudio, self.Owner.Faction.InternalName);
 							}
-						})));
+						})), !order.Queued);
 					}
 
 					break;
@@ -473,9 +473,12 @@ namespace OpenRA.Mods.Common.Traits
 			Queue.Remove(item);
 		}
 
-		protected void BeginProduction(ProductionItem item)
+		protected virtual void BeginProduction(ProductionItem item, bool hasPriority)
 		{
-			Queue.Add(item);
+			if (hasPriority && Queue.Count > 1)
+				Queue.Insert(1, item);
+			else
+				Queue.Add(item);
 		}
 
 		public virtual int RemainingTimeActual(ProductionItem item)

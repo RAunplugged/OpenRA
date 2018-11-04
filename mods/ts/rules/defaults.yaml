@@ -369,9 +369,13 @@
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	CaptureNotification:
+	Demolishable:
+		Condition: being-demolished
 	Sellable:
+		RequiresCondition: !build-incomplete && !being-demolished
 		SellSounds: cashturn.aud
 	WithMakeAnimation:
+		Condition: build-incomplete
 	ThrowsShrapnel@SMALL:
 		Pieces: 3, 5
 	ThrowsShrapnel@LARGE:
@@ -478,9 +482,11 @@
 		TargetTypes: Ground, Wall, C4
 	WithWallSpriteBody:
 		Type: wall
-	Sellable:
-		SellSounds: cashturn.aud
 	Demolishable:
+		Condition: being-demolished
+	Sellable:
+		RequiresCondition: !being-demolished
+		SellSounds: cashturn.aud
 	ScriptTriggers:
 	ConditionManager:
 	Health:
@@ -821,9 +827,11 @@
 	WithTextControlGroupDecoration:
 	SelectionDecorations:
 		Palette: pips
+	Repairable:
+		RepairBuildings: gadept
+		Voice: Move
 	Aircraft:
 		AirborneCondition: airborne
-		RepairBuildings: gadept
 		LandWhenIdle: false
 		Voice: Move
 		IdealSeparation: 853

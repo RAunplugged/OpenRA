@@ -119,3 +119,4 @@ Player:
 		Id: unrestricted
 	ResourceStorageWarning:
 	PlayerExperience:
+	ConditionManager:

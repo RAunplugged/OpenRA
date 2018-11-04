@@ -71,8 +71,6 @@ NAPOST:
 		Amount: -25
 	RevealsShroud:
 		Range: 4c0
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithIdleOverlay@LIGHTS:
 		RequiresCondition: !build-incomplete && !disabled
 		Sequence: lights
@@ -93,6 +91,8 @@ NAFNCE:
 		Types: laserfence
 	-Crushable:
 	-Sellable:
+	Demolishable:
+		-Condition:
 	-Targetable:
 	-Building:
 	EnergyWall:
@@ -169,12 +169,11 @@ NALASR:
 		InitialFacing: 224
 		Offset: 298,-171,288
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: empdisable || disabled
 	Armament:
 		Weapon: TurretLaserFire
 		LocalOffset: 498,0,317
-	WithMakeAnimation:
-		Condition: build-incomplete
 	RenderVoxels:
 	WithVoxelTurret:
 		RequiresCondition: !build-incomplete
@@ -214,6 +213,7 @@ NAOBEL:
 		Weapon: ObeliskLaserFire
 		LocalOffset: 1980,297,1131
 	AttackCharges:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: empdisable || disabled
 		ChargeLevel: 65
 		ChargingCondition: charging
@@ -221,8 +221,6 @@ NAOBEL:
 		RequiresCondition: charging && !disabled
 		SoundFiles: obelpowr.aud
 		Interval: 30, 40
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithChargeOverlay:
 		RequiresCondition: !build-incomplete
 		Palette: player
@@ -262,9 +260,8 @@ NASAM:
 		TurnSpeed: 10
 		InitialFacing: 224
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: empdisable || disabled
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithSpriteTurret:
 		RequiresCondition: !build-incomplete
 		Recoils: false
@@ -300,8 +297,6 @@ NASTLH:
 	RevealsShroud:
 		Range: 6c0
 		MaxHeightDelta: 3
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithIdleOverlay@pulse:
 		RequiresCondition: !build-incomplete && !disabled
 		Sequence: pulse
@@ -350,8 +345,6 @@ NAMISL:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithIdleOverlay@LIGHTS:
 		RequiresCondition: !build-incomplete && !disabled
 		Sequence: idle-lights
@@ -420,8 +413,6 @@ NAWAST:
 		Actor: WEED
 		SpawnOffset: 3,1
 		Facing: 160
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithIdleOverlay@GLOW:
 		RequiresCondition: !build-incomplete
 		Sequence: idle-glow

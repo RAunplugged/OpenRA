@@ -89,12 +89,24 @@ namespace OpenRA.Mods.Common.UpdateRules
 			new UpdatePath("release-20180923", new UpdateRule[]
 			{
 				// Bleed only changes here
+				new AddCarryableHarvester(),
 				new RenameEditorTilesetFilter(),
 				new DefineNotificationDefaults(),
 				new MergeRearmAndRepairAnimation(),
 				new MergeCaptureTraits(),
 				new RemovedNotifyBuildComplete(),
 				new LowPowerSlowdownToModifier(),
+				new ChangeTakeOffSoundAndLandingSound(),
+				new RemoveHealthPercentageRing(),
+				new RenameCrateActionNotification(),
+				new RemoveRepairBuildingsFromAircraft(),
+				new AddRearmable(),
+				new MergeAttackPlaneAndHeli(),
+				new RemovedDemolishLocking(),
+				new RequireProductionType(),
+				new CloakRequiresConditionToPause(),
+				new AddBotOrderManager(),
+				new AddHarvesterBotModule(),
 			})
 		};
 

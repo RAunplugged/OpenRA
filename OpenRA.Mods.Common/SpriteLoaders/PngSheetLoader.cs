@@ -16,9 +16,21 @@ using System.IO;
 using System.Linq;
 using OpenRA.FileFormats;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Graphics;
+using OpenRA.Primitives;
 
 namespace OpenRA.Mods.Common.SpriteLoaders
 {
+	public class PngSheetMetadata
+	{
+		public readonly ReadOnlyDictionary<string, string> Metadata;
+
+		public PngSheetMetadata(Dictionary<string, string> metadata)
+		{
+			Metadata = new ReadOnlyDictionary<string, string>(metadata);
+		}
+	}
+
 	public class PngSheetLoader : ISpriteLoader
 	{
 		class PngSheetFrame : ISpriteFrame
@@ -30,8 +42,9 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 			public bool DisableExportPadding { get { return false; } }
 		}
 
-		public bool TryParseSprite(Stream s, out ISpriteFrame[] frames)
+		public bool TryParseSprite(Stream s, out ISpriteFrame[] frames, out TypeDictionary metadata)
 		{
+			metadata = null;
 			if (!Png.Verify(s))
 			{
 				frames = null;
@@ -65,6 +78,12 @@ namespace OpenRA.Mods.Common.SpriteLoaders
 				for (var y = 0; y < frames[i].Size.Height; y++)
 					Array.Copy(png.Data, frameStart + y * png.Width, frames[i].Data, y * frames[i].Size.Width, frames[i].Size.Width);
 			}
+
+			metadata = new TypeDictionary
+			{
+				new PngSheetMetadata(png.EmbeddedData),
+				new EmbeddedSpritePalette(png.Palette.Select(x => (uint)x.ToArgb()).ToArray())
+			};
 
 			return true;
 		}

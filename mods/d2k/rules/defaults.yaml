@@ -409,11 +409,13 @@
 	ActorLostNotification:
 		Notification: BuildingLost
 	ShakeOnDeath:
+	Demolishable:
+		Condition: being-demolished
 	Sellable:
+		RequiresCondition: !build-incomplete && !being-demolished
 		SellSounds: BUILD1.WAV
 	Guardable:
 		Range: 3c0
-	Demolishable:
 	DamagedByTerrain:
 		Damage: 500
 		DamageInterval: 100
@@ -454,6 +456,8 @@
 	-WithCrumbleOverlay:
 	-Capturable:
 	-WithSpriteBody:
+	Sellable:
+		RequiresCondition: !being-demolished
 	WithWallSpriteBody:
 	LineBuildNode:
 		Types: turret

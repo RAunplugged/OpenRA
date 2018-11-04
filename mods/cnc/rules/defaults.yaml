@@ -233,7 +233,8 @@
 		CloakDelay: 90
 		CloakSound: trans1.aud
 		UncloakSound: trans1.aud
-		RequiresCondition: cloak-crate-collected && !cloak-force-disabled
+		PauseOnCondition: cloak-force-disabled
+		RequiresCondition: cloak-crate-collected
 	ExternalCondition@CLOAK:
 		Condition: cloak-crate-collected
 	GrantConditionOnDamageState@UNCLOAK:
@@ -306,14 +307,16 @@
 	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24,24
-	Aircraft:
+	Repairable:
 		RepairBuildings: hpad
+	Aircraft:
 		LandWhenIdle: false
 		AirborneCondition: airborne
 		CruisingCondition: cruising
 		CanHover: True
 		TakeOffOnResupply: true
 		VTOL: true
+		InitialFacing: 224
 	HiddenUnderFog:
 		Type: GroundPosition
 	ActorLostNotification:
@@ -743,12 +746,16 @@
 	SpawnActorsOnSell:
 		ActorTypes: e6,e1,e1,e1
 	EngineerRepairable:
+	Demolishable:
+		Condition: being-demolished
 	Sellable:
+		RequiresCondition: !build-incomplete && !being-demolished
 		SellSounds: cashturn.aud
 	CaptureManager:
 	Capturable:
 		Types: building-sabotage
 	WithMakeAnimation:
+		Condition: build-incomplete
 	WithBuildingRepairDecoration:
 		Image: allyrepair
 		Sequence: repair

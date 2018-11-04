@@ -27,13 +27,11 @@ NAPULS:
 		TurnSpeed: 10
 		InitialFacing: 224
 	AttackTurreted:
-		RequiresCondition: !empdisable && !disabled
+		RequiresCondition: !build-incomplete && !empdisable && !disabled
 	Armament:
 		Weapon: EMPulseCannon
 		LocalOffset: 212,0,1768
 		LocalYaw: 0,100
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithSpriteTurret:
 		RequiresCondition: !build-incomplete
 		Sequence: turret

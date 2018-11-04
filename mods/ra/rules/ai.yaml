@@ -1,4 +1,5 @@
 Player:
+	BotOrderManager:
 	HackyAI@RushAI:
 		Name: Rush AI
 		Type: rush
@@ -120,6 +121,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
+		Condition: enable-rush-ai
 	HackyAI@NormalAI:
 		Name: Normal AI
 		Type: normal
@@ -260,6 +262,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
+		Condition: enable-normal-ai
 	HackyAI@TurtleAI:
 		Name: Turtle AI
 		Type: turtle
@@ -401,6 +404,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
+		Condition: enable-turtle-ai
 	HackyAI@NavalAI:
 		Name: Naval AI
 		Type: naval
@@ -517,3 +521,6 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
+		Condition: enable-naval-ai
+	HarvesterBotModule:
+		RequiresCondition: enable-rush-ai || enable-normal-ai || enable-turtle-ai || enable-naval-ai

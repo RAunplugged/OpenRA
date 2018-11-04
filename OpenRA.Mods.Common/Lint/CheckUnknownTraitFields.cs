@@ -37,11 +37,19 @@ namespace OpenRA.Mods.Common.Lint
 					// Removals can never define children
 					if (t.Key.StartsWith("-", StringComparison.Ordinal) && t.Value.Nodes.Any())
 					{
-						emitError("{0} has child nodes, which is not valid for removals.".F(t.Key));
+						emitError("{0} defines child nodes, which are not valid for removals.".F(t.Location));
 						continue;
 					}
 
 					var traitName = NormalizeName(t.Key);
+
+					// Inherits can never define children
+					if (traitName == "Inherits" && t.Value.Nodes.Any())
+					{
+						emitError("{0} defines child nodes, which are not valid for Inherits.".F(t.Location));
+						continue;
+					}
+
 					var traitInfo = modData.ObjectCreator.FindType(traitName + "Info");
 					foreach (var field in t.Value.Nodes)
 					{

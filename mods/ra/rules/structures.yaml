@@ -60,8 +60,6 @@ MSLO:
 		Amount: -150
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithNukeLaunchAnimation:
 		RequiresCondition: !build-incomplete
 
@@ -207,6 +205,7 @@ SPEN:
 		PlayerExperience: 15
 	RallyPoint:
 	ProductionBar:
+		ProductionType: Ship
 	Power:
 		Amount: -30
 	DetectCloaked:
@@ -328,6 +327,7 @@ SYRD:
 		PlayerExperience: 15
 	RallyPoint:
 	ProductionBar:
+		ProductionType: Ship
 	Power:
 		Amount: -30
 	DetectCloaked:
@@ -554,6 +554,7 @@ TSLA:
 		Weapon: TeslaZap
 		LocalOffset: 0,0,896
 	AttackTesla:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled
 		ChargeAudio: tslachg2.aud
 		MaxCharges: 3
@@ -603,6 +604,7 @@ AGUN:
 		LocalOffset: 520,100,450, 520,-150,450
 		MuzzleSequence: muzzle
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled
 	WithMuzzleOverlay:
 	RenderRangeCircle:
@@ -703,6 +705,7 @@ PBOX:
 		InitialUnits: e1
 	-SpawnActorsOnSell:
 	AttackGarrisoned:
+		RequiresCondition: !build-incomplete
 		Armaments: garrisoned
 		PortOffsets: 384,0,128, 224,-341,128, -224,-341,128, -384,0,128, -224,341,128, 224,341,128
 		PortYaws: 0, 176, 341, 512, 682, 853
@@ -742,7 +745,7 @@ HBOX:
 		InitialDelay: 125
 		CloakDelay: 60
 		IsPlayerPalette: true
-		RequiresCondition: !cloak-force-disabled
+		PauseOnCondition: cloak-force-disabled
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -762,6 +765,7 @@ HBOX:
 	RenderRangeCircle:
 		FallbackRange: 6c0
 	AttackGarrisoned:
+		RequiresCondition: !build-incomplete
 		Armaments: garrisoned
 		PortOffsets: 384,0,128, 224,-341,128, -224,-341,128, -384,0,128, -224,341,128, 224,341,128
 		PortYaws: 0, 176, 341, 512, 682, 853
@@ -804,6 +808,7 @@ GUN:
 		LocalOffset: 512,0,112
 		MuzzleSequence: muzzle
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 	WithMuzzleOverlay:
 	Power:
 		Amount: -40
@@ -843,6 +848,7 @@ FTUR:
 		Weapon: FireballLauncher
 		LocalOffset: 512,0,0
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 	-QuantizeFacingsFromSequence:
 	BodyOrientation:
 		QuantizedFacings: 8
@@ -899,6 +905,7 @@ SAM:
 		LocalOffset: 0,0,320
 		MuzzleSequence: muzzle
 	AttackTurreted:
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled
 	WithMuzzleOverlay:
 	RenderRangeCircle:
@@ -982,8 +989,6 @@ WEAP:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithProductionDoorOverlay:
 		RequiresCondition: !build-incomplete
 		Sequence: build-top
@@ -1052,6 +1057,7 @@ WEAP:
 		PrimaryCondition: primary
 		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
+		ProductionType: Vehicle
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -1127,13 +1133,13 @@ FACT:
 		ActorTypes: e1,e1,e1,tecn,tecn,e6
 	BaseBuilding:
 	Transforms:
-		PauseOnCondition: chrono-vortex || being-captured
+		RequiresCondition: factundeploy && !build-incomplete
+		PauseOnCondition: chrono-vortex || being-captured || being-demolished
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 96
-		RequiresCondition: factundeploy
 	Sellable:
-		RequiresCondition: !chrono-vortex && !being-captured
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !being-demolished
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -1146,8 +1152,6 @@ FACT:
 		PauseOnCondition: being-captured
 		Range: 16c0
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
@@ -1162,6 +1166,7 @@ FACT:
 			TopLeft: -1536, -1536
 			BottomRight: 1536, 1536
 	ConyardChronoReturn:
+		ReturnOriginalActorOnCondition: build-incomplete
 		Condition: chrono-vortex
 		Damage: 950
 	TransferTimedExternalConditionOnTransform:
@@ -1215,8 +1220,6 @@ PROC:
 		Types: SpyInfiltrate
 		Notification: CreditsStolen
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithIdleOverlay@TOP:
 		RequiresCondition: !build-incomplete
 		Sequence: idle-top
@@ -1264,8 +1267,6 @@ SILO:
 		Range: 4c0
 	WithBuildingBib:
 		HasMinibib: Yes
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithSiloAnimation:
 		RequiresCondition: !build-incomplete
 	StoresResources:
@@ -1309,8 +1310,6 @@ HPAD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	Exit@1:
@@ -1324,6 +1323,7 @@ HPAD:
 		Produces: Aircraft, Helicopter
 	Reservable:
 	ProductionBar:
+		ProductionType: Aircraft
 	PrimaryBuilding:
 		PrimaryCondition: primary
 		SelectionNotification: PrimaryBuildingSelected
@@ -1492,6 +1492,7 @@ AFLD:
 		ClockSequence: clock
 		CircleSequence: circles
 	ProductionBar:
+		ProductionType: Aircraft
 	SupportPowerChargeBar:
 	PrimaryBuilding:
 		PrimaryCondition: primary
@@ -1512,8 +1513,6 @@ AFLD:
 		ReferencePoint: Top
 		ZOffset: 256
 		RequiresCondition: primary
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 
@@ -1690,6 +1689,7 @@ BARR:
 		PrimaryCondition: primary
 		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
+		ProductionType: Infantry
 	ProvidesPrerequisite:
 		Prerequisite: barracks
 	ProvidesPrerequisite@soviet:
@@ -1772,6 +1772,7 @@ KENN:
 		PrimaryCondition: primary
 		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
+		ProductionType: Infantry
 	-SpawnActorsOnSell:
 	Power:
 		Amount: -10
@@ -1832,6 +1833,7 @@ TENT:
 		PrimaryCondition: primary
 		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
+		ProductionType: Infantry
 	ProvidesPrerequisite@barracks:
 		Prerequisite: barracks
 	ProvidesPrerequisite@allies:
@@ -1917,8 +1919,6 @@ FIX:
 		PlayerExperience: 15
 	WithBuildingBib:
 		HasMinibib: Yes
-	WithMakeAnimation:
-		Condition: build-incomplete
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	Power:

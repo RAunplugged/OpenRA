@@ -526,7 +526,6 @@
 	Selectable:
 		Bounds: 24,24
 	Aircraft:
-		RepairBuildings: fix
 		AirborneCondition: airborne
 	Targetable@GROUND:
 		TargetTypes: Ground, Repair, Vehicle
@@ -573,6 +572,8 @@
 ^Plane:
 	Inherits: ^NeutralPlane
 	Inherits@2: ^GainsExperience
+	Repairable:
+		RepairBuildings: fix
 
 ^Helicopter:
 	Inherits: ^Plane
@@ -584,6 +585,7 @@
 		WaitDistanceFromResupplyBase: 4c0
 		TakeOffOnResupply: true
 		VTOL: true
+		InitialFacing: 224
 	GpsDot:
 		String: Helicopter
 	Hovers@CRUISING:
@@ -650,6 +652,7 @@
 	EngineerRepairable:
 	AcceptsDeliveredCash:
 	WithMakeAnimation:
+		Condition: build-incomplete
 	CaptureManager:
 		BeingCapturedCondition: being-captured
 	Capturable:
@@ -662,8 +665,10 @@
 		RequiredForShortGame: true
 	GpsDot:
 		String: Structure
+	Demolishable:
+		Condition: being-demolished
 	Sellable:
-		RequiresCondition: !being-captured
+		RequiresCondition: !build-incomplete && !being-captured && !being-demolished
 		SellSounds: cashturn.aud
 	WithBuildingRepairDecoration:
 		Image: allyrepair
