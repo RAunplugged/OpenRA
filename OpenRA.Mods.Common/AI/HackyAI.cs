@@ -21,7 +21,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.AI
 {
-	public sealed class HackyAIInfo : IBotInfo, ITraitInfo, Requires<BotOrderManagerInfo>
+	public sealed class HackyAIInfo : IBotInfo, ITraitInfo
 	{
 		public class UnitCategories
 		{
@@ -49,11 +49,6 @@ namespace OpenRA.Mods.Common.AI
 		[Desc("Human-readable name this bot uses.")]
 		public readonly string Name = "Unnamed Bot";
 
-		[FieldLoader.Require]
-		[GrantedConditionReference]
-		[Desc("Condition to grant. Mostly used to activate modules.")]
-		public readonly string Condition = null;
-
 		[Desc("Minimum number of units AI must have before attacking.")]
 		public readonly int SquadSize = 8;
 
@@ -77,6 +72,9 @@ namespace OpenRA.Mods.Common.AI
 
 		[Desc("Minimum delay (in ticks) between creating squads.")]
 		public readonly int MinimumAttackForceDelay = 0;
+
+		[Desc("Minimum portion of pending orders to issue each tick (e.g. 5 issues at least 1/5th of all pending orders). Excess orders remain queued for subsequent ticks.")]
+		public readonly int MinOrderQuotientPerTick = 5;
 
 		[Desc("Minimum excess power the AI should try to maintain.")]
 		public readonly int MinimumExcessPower = 0;
@@ -271,9 +269,6 @@ namespace OpenRA.Mods.Common.AI
 		readonly Func<Actor, bool> isEnemyUnit;
 		readonly Predicate<Actor> unitCannotBeOrdered;
 
-		BotOrderManager botOrderManager;
-		int conditionToken = ConditionManager.InvalidConditionToken;
-
 		CPos initialBaseCenter;
 		PowerManager playerPower;
 		PlayerResources playerResource;
@@ -308,6 +303,8 @@ namespace OpenRA.Mods.Common.AI
 		int minCaptureDelayTicks;
 		readonly int maximumCaptureTargetOptions;
 
+		readonly Queue<Order> orders = new Queue<Order>();
+
 		public HackyAI(HackyAIInfo info, ActorInitializer init)
 		{
 			Info = info;
@@ -326,6 +323,12 @@ namespace OpenRA.Mods.Common.AI
 			maximumCaptureTargetOptions = Math.Max(1, Info.MaximumCaptureTargetOptions);
 		}
 
+		public static void BotDebug(string s, params object[] args)
+		{
+			if (Game.Settings.Debug.BotDebug)
+				Game.Debug(s, args);
+		}
+
 		// Called by the host's player creation code
 		public void Activate(Player p)
 		{
@@ -333,7 +336,6 @@ namespace OpenRA.Mods.Common.AI
 			IsEnabled = true;
 			playerPower = p.PlayerActor.TraitOrDefault<PowerManager>();
 			playerResource = p.PlayerActor.Trait<PlayerResources>();
-			botOrderManager = p.PlayerActor.Trait<BotOrderManager>();
 
 			harvManager = new AIHarvesterManager(this, p);
 			supportPowerManager = new AISupportPowerManager(this, p);
@@ -359,13 +361,8 @@ namespace OpenRA.Mods.Common.AI
 			resourceTypeIndices = new BitArray(tileset.TerrainInfo.Length); // Big enough
 			foreach (var t in Map.Rules.Actors["world"].TraitInfos<ResourceTypeInfo>())
 				resourceTypeIndices.Set(tileset.GetTerrainIndex(t.TerrainType), true);
-
-			var conditionManager = p.PlayerActor.TraitOrDefault<ConditionManager>();
-			if (conditionManager != null && conditionToken == ConditionManager.InvalidConditionToken)
-				conditionToken = conditionManager.GrantCondition(p.PlayerActor, Info.Condition);
 		}
 
-		// DEPRECATED: Bot modules should queue orders directly.
 		public void QueueOrder(Order order)
 		{
 			botOrderManager.QueueOrder(order);
@@ -600,7 +597,6 @@ namespace OpenRA.Mods.Common.AI
 
 			activeUnits.RemoveAll(unitCannotBeOrdered);
 			unitsHangingAroundTheBase.RemoveAll(unitCannotBeOrdered);
-			harvesters.RemoveAll(unitCannotBeOrdered);
 
 			if (--rushTicks <= 0)
 			{
@@ -619,7 +615,6 @@ namespace OpenRA.Mods.Common.AI
 			{
 				assignRolesTicks = Info.AssignRolesInterval;
 				FindNewUnits(self);
-				harvManager.Tick(harvesters);
 				InitializeBase(self, true);
 			}
 
@@ -723,13 +718,10 @@ namespace OpenRA.Mods.Common.AI
 		void FindNewUnits(Actor self)
 		{
 			var newUnits = self.World.ActorsHavingTrait<IPositionable>()
-				.Where(a => a.Owner == Player && !activeUnits.Contains(a) && !harvesters.Contains(a));
+				.Where(a => a.Owner == Player && !activeUnits.Contains(a));
 
 			foreach (var a in newUnits)
 			{
-				if (a.Info.HasTraitInfo<HarvesterInfo>())
-					harvesters.Add(a);
-
 				if (Info.UnitsCommonNames.Mcv.Contains(a.Info.Name) || Info.UnitsCommonNames.ExcludeFromSquads.Contains(a.Info.Name))
 					continue;
 
