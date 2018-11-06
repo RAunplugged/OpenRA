@@ -123,9 +123,8 @@
     <Compile Include="AI\AIUtils.cs" />
     <Compile Include="AI\AttackOrFleeFuzzy.cs" />
     <Compile Include="AI\BaseBuilder.cs" />
-    <Compile Include="AI\BotOrderManager.cs" />
     <Compile Include="AI\HackyAI.cs" />
-    <Compile Include="Traits\BotModules\HarvesterBotModule.cs" />
+    <Compile Include="AI\AIHarvesterManager.cs" />
     <Compile Include="AI\AISupportPowerManager.cs" />
     <Compile Include="AI\Squad.cs" />
     <Compile Include="AI\StateMachine.cs" />
@@ -940,8 +939,6 @@
     <Compile Include="UpdateRules\Rules\20180923\RemoveRepairBuildingsFromAircraft.cs" />
     <Compile Include="UpdateRules\Rules\20180923\AddRearmable.cs" />
     <Compile Include="UpdateRules\Rules\20180923\MergeAttackPlaneAndHeli.cs" />
-    <Compile Include="UpdateRules\Rules\20180923\AddBotOrderManager.cs" />
-    <Compile Include="UpdateRules\Rules\20180923\AddHarvesterBotModule.cs" />
     <Compile Include="Traits\Player\PlayerResources.cs" />
     <Compile Include="UtilityCommands\DumpSequenceSheetsCommand.cs" />
     <Compile Include="Traits\Render\WithBuildingRepairDecoration.cs" />

@@ -105,8 +105,6 @@ namespace OpenRA.Mods.Common.UpdateRules
 				new RemovedDemolishLocking(),
 				new RequireProductionType(),
 				new CloakRequiresConditionToPause(),
-				new AddBotOrderManager(),
-				new AddHarvesterBotModule(),
 			})
 		};
 

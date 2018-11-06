@@ -281,6 +281,7 @@ namespace OpenRA.Mods.Common.AI
 
 		BitArray resourceTypeIndices;
 
+		AIHarvesterManager harvManager;
 		AISupportPowerManager supportPowerManager;
 
 		List<BaseBuilder> builders = new List<BaseBuilder>();
@@ -289,6 +290,10 @@ namespace OpenRA.Mods.Common.AI
 
 		// Units that the ai already knows about. Any unit not on this list needs to be given a role.
 		List<Actor> activeUnits = new List<Actor>();
+
+		// Harvesters are usually listed under ExcludeFromSquads, so they're not included in the activeUnits list, but still needed in AIHarvesterManager.
+		// TODO: Consider adding an explicit UnitsCommonNames.Harvester category.
+		List<Actor> harvesters = new List<Actor>();
 
 		public const int FeedbackTime = 30; // ticks; = a bit over 1s. must be >= netlag.
 
@@ -330,6 +335,7 @@ namespace OpenRA.Mods.Common.AI
 			playerResource = p.PlayerActor.Trait<PlayerResources>();
 			botOrderManager = p.PlayerActor.Trait<BotOrderManager>();
 
+			harvManager = new AIHarvesterManager(this, p);
 			supportPowerManager = new AISupportPowerManager(this, p);
 
 			foreach (var building in Info.BuildingQueues)
@@ -594,6 +600,7 @@ namespace OpenRA.Mods.Common.AI
 
 			activeUnits.RemoveAll(unitCannotBeOrdered);
 			unitsHangingAroundTheBase.RemoveAll(unitCannotBeOrdered);
+			harvesters.RemoveAll(unitCannotBeOrdered);
 
 			if (--rushTicks <= 0)
 			{
@@ -612,6 +619,7 @@ namespace OpenRA.Mods.Common.AI
 			{
 				assignRolesTicks = Info.AssignRolesInterval;
 				FindNewUnits(self);
+				harvManager.Tick(harvesters);
 				InitializeBase(self, true);
 			}
 
@@ -715,10 +723,13 @@ namespace OpenRA.Mods.Common.AI
 		void FindNewUnits(Actor self)
 		{
 			var newUnits = self.World.ActorsHavingTrait<IPositionable>()
-				.Where(a => a.Owner == Player && !activeUnits.Contains(a));
+				.Where(a => a.Owner == Player && !activeUnits.Contains(a) && !harvesters.Contains(a));
 
 			foreach (var a in newUnits)
 			{
+				if (a.Info.HasTraitInfo<HarvesterInfo>())
+					harvesters.Add(a);
+
 				if (Info.UnitsCommonNames.Mcv.Contains(a.Info.Name) || Info.UnitsCommonNames.ExcludeFromSquads.Contains(a.Info.Name))
 					continue;
 
