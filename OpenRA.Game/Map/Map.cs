@@ -648,8 +648,23 @@ namespace OpenRA
 		public byte[] SavePreview()
 		{
 			var tileset = Rules.TileSet;
-			var resources = Rules.Actors["world"].TraitInfos<ResourceTypeInfo>()
-				.ToDictionary(r => r.ResourceType, r => r.TerrainType);
+			var colorOverlayBuffer = new CellLayer<Color>(this);
+			colorOverlayBuffer.Clear(Color.Transparent);
+ 			// World traits have the lowest priority for overriding the terrain color
+			var worldActorInfo = Rules.Actors["world"];
+			var worldActorReference = new ActorReference("world", new Dictionary<string, MiniYaml>());
+ 			foreach (var signature in worldActorInfo.TraitInfos<IMapPreviewSignatureInfo>())
+				signature.PopulateMapPreviewSignatureCells(worldActorReference, worldActorInfo, this, colorOverlayBuffer);
+ 			// Individual actors can override the terrain or world-defined colors
+			var actorTypes = Rules.Actors.Values.Where(a => a.HasTraitInfo<IMapPreviewSignatureInfo>());
+			var actors = ActorDefinitions.Where(a => actorTypes.Any(ai => ai.Name == a.Value.Value));
+			foreach (var actor in actors)
+			{
+				var actorInfo = Rules.Actors[actor.Value.Value];
+				var actorReference = new ActorReference(actorInfo.Name, actor.Value.ToDictionary());
+				foreach (var signature in actorInfo.TraitInfos<IMapPreviewSignatureInfo>())
+					signature.PopulateMapPreviewSignatureCells(actorReference, actorInfo, this, colorOverlayBuffer);
+			}
 
 			using (var stream = new MemoryStream())
 			{
@@ -681,16 +696,9 @@ namespace OpenRA
 							for (var x = 0; x < width; x++)
 							{
 								var uv = new MPos(x + Bounds.Left, y + Bounds.Top);
-								var resourceType = Resources[uv].Type;
-								if (resourceType != 0)
-								{
-									// Cell contains resources
-									string res;
-									if (!resources.TryGetValue(resourceType, out res))
-										continue;
-
-									leftColor = rightColor = tileset[tileset.GetTerrainIndex(res)].Color;
-								}
+								var overlay = colorOverlayBuffer[uv];
+								if (overlay != Color.Transparent)
+									leftColor = rightColor = overlay;
 								else
 								{
 									// Cell contains terrain

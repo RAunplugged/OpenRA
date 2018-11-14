@@ -11,16 +11,29 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using OpenRA.Graphics;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
 	[Desc("Attach this to the world actor.", "Order of the layers defines the Z sorting.")]
-	public class ResourceLayerInfo : ITraitInfo, Requires<ResourceTypeInfo>, Requires<BuildingInfluenceInfo>
+	public class ResourceLayerInfo : ITraitInfo, IMapPreviewSignatureInfo, Requires<ResourceTypeInfo>, Requires<BuildingInfluenceInfo>
 	{
+		void IMapPreviewSignatureInfo.PopulateMapPreviewSignatureCells(ActorReference reference, ActorInfo info, Map map, CellLayer<Color> colorOverlayBuffer)
+		{
+			var tileSet = map.Rules.TileSet;
+			var resourceColors = info.TraitInfos<ResourceTypeInfo>().ToDictionary(
+				rti => rti.ResourceType,
+				rti => tileSet[tileSet.GetTerrainIndex(rti.TerrainType)].Color);
+ 			Color cellColor;
+			foreach (var cell in map.AllCells)
+				if (resourceColors.TryGetValue(map.Resources[cell].Type, out cellColor))
+					colorOverlayBuffer[cell] = cellColor;
+		}
 		public virtual object Create(ActorInitializer init) { return new ResourceLayer(init.Self); }
 	}
 
