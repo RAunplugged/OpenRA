@@ -49,11 +49,6 @@ namespace OpenRA.Mods.Common.AI
 		[Desc("Human-readable name this bot uses.")]
 		public readonly string Name = "Unnamed Bot";
 
-		[FieldLoader.Require]
-		[GrantedConditionReference]
-		[Desc("Condition to grant. Mostly used to activate modules.")]
-		public readonly string Condition = null;
-
 		[Desc("Minimum number of units AI must have before attacking.")]
 		public readonly int SquadSize = 8;
 
@@ -164,9 +159,6 @@ namespace OpenRA.Mods.Common.AI
 		[Desc("Terrain types which are considered water for base building purposes.")]
 		public readonly HashSet<string> WaterTerrainTypes = new HashSet<string> { "Water" };
 
-		[Desc("Avoid enemy actors nearby when searching for a new resource patch. Should be somewhere near the max weapon range.")]
-		public readonly WDist HarvesterEnemyAvoidanceRadius = WDist.FromCells(8);
-
 		[Desc("Production queues AI uses for producing units.")]
 		public readonly HashSet<string> UnitQueues = new HashSet<string> { "Vehicle", "Infantry", "Plane", "Ship", "Aircraft" };
 
@@ -272,7 +264,6 @@ namespace OpenRA.Mods.Common.AI
 		readonly Predicate<Actor> unitCannotBeOrdered;
 
 		BotOrderManager botOrderManager;
-		int conditionToken = ConditionManager.InvalidConditionToken;
 
 		CPos initialBaseCenter;
 		PowerManager playerPower;
@@ -353,10 +344,6 @@ namespace OpenRA.Mods.Common.AI
 			resourceTypeIndices = new BitArray(tileset.TerrainInfo.Length); // Big enough
 			foreach (var t in Map.Rules.Actors["world"].TraitInfos<ResourceTypeInfo>())
 				resourceTypeIndices.Set(tileset.GetTerrainIndex(t.TerrainType), true);
-
-			var conditionManager = p.PlayerActor.TraitOrDefault<ConditionManager>();
-			if (conditionManager != null && conditionToken == ConditionManager.InvalidConditionToken)
-				conditionToken = conditionManager.GrantCondition(p.PlayerActor, Info.Condition);
 		}
 
 		// DEPRECATED: Bot modules should queue orders directly.
